@@ -9,6 +9,8 @@ namespace CartAPI
     {
         public static void Register(HttpConfiguration config)
         {
+            string credential_path = @"C:\Users\kumar\OneDrive\Documents\Carted-0295b328550a.json";
+            System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
             // Web API configuration and services
 
             // Web API routes
