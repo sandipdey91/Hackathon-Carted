@@ -1,4 +1,5 @@
 ﻿using CartAPI.Algolia;
+using CartAPI.Models;
 using Google.Cloud.Vision.V1;
 using System;
 using System.Collections.Generic;
@@ -8,34 +9,34 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Hosting;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace CartAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ItemsController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult Test()
+        public IEnumerable<Item> GetItems()
         {
+            // Instantiates a client
+            //var client = ImageAnnotatorClient.Create();
+            // Load the image file into memory
+            //var image = Image.FromFile(@"C:\Users\kumar\OneDrive\Desktop\pasta.jpg");
+            // Performs label detection on the image file
+            //var response = client.DetectWebInformation(image);
 
             AlgSearch algSearch = new AlgSearch();
 
-            algSearch.Search(new List<string>(new string[] { "pasta", "penne", "Rigatoni" }));
+            //var result = algSearch.Search(response.WebEntities.Select(t=>t.Description).Take(10).ToList());
 
-            //// Instantiates a client
-            //var client = ImageAnnotatorClient.Create();
-            //    // Load the image file into memory
-            //    var image = Image.FromFile(@"C:\Users\kumar\OneDrive\Desktop\eb74754f-d053-46b6-9f94-8f78cb648fa3_1.48cb6d913d610799e169f42beca64ff2.png");
-            //    // Performs label detection on the image file
-            //    var response = client.DetectLabels(image);
+            var result = algSearch.Search("pasta");
 
+            result.ForEach(t => {
+                t.ItemName = t.ItemName.Substring(0, Math.Min(t.ItemName.Length, 20));
+            });
 
-            //foreach (var annotation in response)
-            //    {
-            //        if (annotation.Description != null)
-            //            Console.WriteLine(annotation.Description);
-            //    }
-
-            return Ok();
+            return result.AsEnumerable<Item>();
         }
 
         [HttpPost]
