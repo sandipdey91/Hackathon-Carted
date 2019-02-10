@@ -32,10 +32,16 @@ namespace CartAPI.Controllers
 
             //var result = algSearch.Search(response.WebEntities.Select(t=>t.Description).Take(10).ToList());
 
-            var result = algSearch.Search("pasta");
+            var result = algSearch.Search("soda");
+
+            Random random = new Random();
 
             result.ForEach(t => {
                 t.ItemName = t.ItemName.Substring(0, Math.Min(t.ItemName.Length, 20));
+
+                t.Price = random.Next(1, 20);
+                int temp = random.Next(4);
+                t.OnSale = temp == 1 || temp == 0 ? true : false;
             });
 
             return result.AsEnumerable<Item>();
@@ -60,8 +66,14 @@ namespace CartAPI.Controllers
 
             //var result = algSearch.Search("pasta");
 
+            Random random = new Random();
+
             result.ForEach(t => {
                 t.ItemName = t.ItemName.Substring(0, Math.Min(t.ItemName.Length, 20));
+
+                t.Price = random.Next(1,20);
+                int temp = random.Next(4);
+                t.OnSale = temp == 1 || temp==0 ? true : false;
             });
 
             return result.AsEnumerable<Item>();
@@ -69,8 +81,22 @@ namespace CartAPI.Controllers
 
         [HttpPost]
         [Route("Test")]
-        public HttpResponseMessage Post()
+        public HttpResponseMessage Post([FromBody]string raw)
         {
+            //var base64Data = Regex.Match(data, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+            //var binData = Convert.FromBase64String(base64Data);
+
+            //using (var stream = new MemoryStream(binData))
+            //{
+            //    var pictureBox = new PictureBox
+            //    {
+            //        Image = new Bitmap(stream),
+            //    };
+
+            //    var form = new Form { AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink };
+            //    form.Controls.Add(pictureBox);
+            //    Application.Run(form);
+            //}
 
             var result = new HttpResponseMessage(HttpStatusCode.OK);
             if (Request.Content.IsMimeMultipartContent())

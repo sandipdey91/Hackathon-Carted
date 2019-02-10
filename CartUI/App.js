@@ -54,11 +54,18 @@ app.controller('Items', function ($scope, $interval, RestCall, $timeout) {
 
     function OnLoad() {
         GetBuyAgainItems();
+        GetSuggestedItems();
     }
 
     function GetBuyAgainItems() {
         RestCall.getCall("Items/RandomItems").then(function (response) {
             $scope.BuyAgainItems = response.data;
+        });
+    };
+
+    function GetSuggestedItems() {
+        RestCall.getCall("Items").then(function (response) {
+            $scope.SuggestedItems = response.data;
         });
     };
 

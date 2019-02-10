@@ -12,6 +12,8 @@ namespace CartAPI.Models
         public string ItemName { get; set; }
         public string ItemDescription { get; set; }
         public string ImageURL { get; set; }
+        public int Price { get; set; }
+        public bool OnSale { get; set; }
     }
 
     // Custom comparer for the Product class
