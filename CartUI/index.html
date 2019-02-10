@@ -204,10 +204,10 @@
 
     <div class="row ">
 
-      <div ng-repeat="result in BuyAgainItems">
+      <div ng-repeat="result in SuggestedItems">
         <div class="col-lg-2 pad-item">
 
-          <div class="card bg-light mb-3" style="width: 14rem;">
+          <div class="card border-info mb-3 " style="width: 14rem;">
             <div ng-if="result.ImageURL != 'null'">
               <img src="{{result.ImageURL}}" class="card-img-top" alt="..." style="height: 100px;width: 200px;">
             </div>
@@ -215,7 +215,7 @@
               <img src="Img/no.png" class="card-img-top" alt="..." style="height: 100px;width: 200px;">
             </div>
 
-            <div class="card-body">
+            <div class="card-body text-info">
               <h5 class="card-title">{{result.ItemName}}</h5>
               <div ng-if="result.ItemDescription != 'null'">
                 <p class="card-text .limit-text" style="font-size: small;font-style: italic;">{{result.ItemDescription}}</p>
@@ -256,9 +256,9 @@
   <!-- /.container -->
 
   <!-- Footer -->
-  <footer class="py-5 bg-dark">
+  <footer class="py-2 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+      <p class="m-0 text-center text-white">Copyright &copy; Carted 2019</p>
     </div>
     <!-- /.container -->
   </footer>

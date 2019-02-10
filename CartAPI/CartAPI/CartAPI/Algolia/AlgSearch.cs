@@ -1,6 +1,7 @@
 ﻿
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
+using Algolia.Search.Iterators;
 using Algolia.Search.Models.Common;
 using Algolia.Search.Models.Search;
 using CartAPI.Models;
@@ -20,6 +21,29 @@ namespace CartAPI.Algolia
             var result = index.Search<Item>(new Query(text));
 
             return result.Hits;
+        }
+
+        public List<Item> RandomItems()
+        {
+            SearchClient client = new SearchClient("BIW6EL1FTD", "a5af55b1831c11747c108cc179f2d790");
+            SearchIndex index = client.InitIndex("Items");
+            IndexIterator<Item> indexIterator = index.Browse<Item>(new BrowseIndexQuery { });
+
+            var hits = new List<Item>();
+
+            int max = 0;
+            foreach (var hit in indexIterator)
+            {
+                if(hit.ImageURL!="null")
+                    hits.Add(hit);
+
+                if (max > 100)
+                    break;
+                else
+                    max++;
+            }
+            Random rnd = new Random();
+            return hits.Where(t=>t.ImageURL.ToLower() !="null").OrderBy(x => rnd.Next()).Take(20).ToList();
         }
 
         public List<Item> Search(List<string> text)

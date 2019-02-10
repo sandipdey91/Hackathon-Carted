@@ -14,8 +14,10 @@ using System.Web.Http.Cors;
 namespace CartAPI.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [RoutePrefix("api/Items")]
     public class ItemsController : ApiController
     {
+        [Route("")]
         [HttpGet]
         public IEnumerable<Item> GetItems()
         {
@@ -39,7 +41,34 @@ namespace CartAPI.Controllers
             return result.AsEnumerable<Item>();
         }
 
+        [HttpGet]
+        [Route("RandomItems")]
+        public IEnumerable<Item> GetRandomItems()
+        {
+
+            // Instantiates a client
+            //var client = ImageAnnotatorClient.Create();
+            // Load the image file into memory
+            //var image = Image.FromFile(@"C:\Users\kumar\OneDrive\Desktop\pasta.jpg");
+            // Performs label detection on the image file
+            //var response = client.DetectWebInformation(image);
+
+            AlgSearch algSearch = new AlgSearch();
+
+            var result = algSearch.RandomItems();
+            //var result = algSearch.Search(response.WebEntities.Select(t=>t.Description).Take(10).ToList());
+
+            //var result = algSearch.Search("pasta");
+
+            result.ForEach(t => {
+                t.ItemName = t.ItemName.Substring(0, Math.Min(t.ItemName.Length, 20));
+            });
+
+            return result.AsEnumerable<Item>();
+        }
+
         [HttpPost]
+        [Route("Test")]
         public HttpResponseMessage Post()
         {
 

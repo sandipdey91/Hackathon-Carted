@@ -17,6 +17,8 @@ app.service('RestCall', ['$http', function ($http) {
 
 
 app.controller('Items', function ($scope, $interval, RestCall, $timeout) {
+    $scope.BuyAgainItems=[];
+    $scope.SuggestedItems=[];
     // $scope.SearchResults = [];
     // $scope.Search = function (text) {
     //     //$scope.startSpin();
@@ -55,7 +57,7 @@ app.controller('Items', function ($scope, $interval, RestCall, $timeout) {
     }
 
     function GetBuyAgainItems() {
-        RestCall.getCall("Items").then(function (response) {
+        RestCall.getCall("Items/RandomItems").then(function (response) {
             $scope.BuyAgainItems = response.data;
         });
     };
